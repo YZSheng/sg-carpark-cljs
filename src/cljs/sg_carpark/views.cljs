@@ -4,20 +4,18 @@
    [sg-carpark.subs :as subs]))
 
 
-(def table-data [{:name "John" :age 32} {:name "Mark" :age 41}])
+(def table-data [{:name "John" :age 32} {:name "Mark" :age 41} {:name "Julie" :age 20}])
 
 (defn result-table []
   [:table
    [:thead
     [:tr
-     (map (fn [val] [:th val]) (keys (first table-data)))]]
-   [:tbody
-    (map (fn [row]
-           [:tr
-            (map (fn [val] [:td val])
-                 row)])
-         table-data)]])
-
+     [:td "Name"]
+     [:td "Age"]]]
+   [:tbody (for [data table-data]
+             [:tr
+              [:td (:name data)]
+              [:td (:age data)]])]])
 
 (defn main-panel []
   (let [name (re-frame/subscribe [::subs/name])]
